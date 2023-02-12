@@ -29,11 +29,60 @@ for i in range(len(json_files)):
 df_all = pd.concat([hold[0],hold[1],hold[2],hold[3],hold[4],hold[5],
                     hold[6],hold[7]],ignore_index=True)
 
-df_all = df_all.drop(df_all[df_all.ms_played == 0].index)
+#df_all = df_all.drop(df_all[df_all.ms_played == 0].index)
 # perhaps remove ms_played for other small values, e.g. <=1000
+df_all = df_all.drop(df_all[df_all.ms_played<=31000].index)
 df_all = df_all.drop(df_all[df_all.skipped == True].index)
 df_all = df_all.drop_duplicates(subset=['master_metadata_track_name','ts'])
+# remove podcasts
+df_all = df_all.drop(df_all[df_all.episode_name.notnull()].index)
 
-df_all = df_all.sort(columns='ts')# sort(columns='ts')
+# remove null entries of track name, album name, artist
+df_all = df_all.drop(df_all[(df_all.master_metadata_album_artist_name.isnull()) &
+                            (df_all.master_metadata_album_album_name.isnull()) &
+                            (df_all.master_metadata_track_name.isnull())].index)
+
+#df_all = df_all.sort(columns='ts')# sort(columns='ts')
     # find any repeats with small ms_played
 #Air Fàir An Là # u in front of string for special characters
+
+df_all = df_all.sort(columns=['master_metadata_album_artist_name',
+                              'master_metadata_album_album_name',
+                              'master_metadata_track_name'])
+
+A = df_all.groupby(by=['master_metadata_track_name',
+                       'master_metadata_album_album_name',
+                       'ms_played']).aggregate({'master_metadata_track_name':'first',
+                                               'master_metadata_album_album_name':'first',
+                                               'ms_played':'max'})
+
+df_dd = df_all.drop_duplicates(subset=['master_metadata_album_artist_name',
+                                       'master_metadata_album_album_name',
+                                       'master_metadata_track_name']).reset_index()
+
+inds_to_drop = []
+#for i in range(len(df_all)):
+#    abm_nm = df_all.iloc[i].master_metadata_album_album_name
+#    sng_nm = df_all.iloc[i].master_metadata_track_name
+#    
+#    max_ms = A[(A.master_metadata_album_album_name==abm_nm) & 
+#                        (A.master_metadata_track_name==sng_nm)].ms_played.max()
+#    
+#    if df_all.iloc[i].ms_played < max_ms/2:
+#        inds_to_drop.append(df_all.iloc[i].name)
+
+for i in range(len(df_dd)):
+    sng_nm = df_dd.iloc[i].master_metadata_track_name
+    abm_nm = df_dd.iloc[i].master_metadata_album_album_name
+    ast_nm = df_dd.iloc[i].master_metadata_album_artist_name
+    
+    X = df_all[(df_all.master_metadata_track_name==sng_nm) & 
+                (df_all.master_metadata_album_album_name==abm_nm) & 
+                (df_all.master_metadata_album_artist_name==ast_nm)]
+    
+    if len(X) > 1 and len(X[X.ms_played<X.ms_played.max()/2]) > 0:
+        inds_to_drop.append(X[X.ms_played<X.ms_played.max()/2].index)
+
+inds_to_drop = [item for sublist in inds_to_drop for item in sublist]
+
+B = df_all.drop(inds_to_drop)
