@@ -8,8 +8,9 @@ Created on Sat Feb 11 12:47:08 2023
 import pylab as pl
 import pandas as pd
 import glob as glob
+import datetime
 
-json_files = glob.glob('C://Users//phili//Downloads//my_spotify_data_all//MyData//endsong_*.json')
+json_files = glob.glob('C://Users//phili//Documents//spotify_stream_history_jun23//Streaming_History_Audio_*.json')
 
 #data = pd.read_json('C://Users//phili//Downloads//my_spotify_data_all//MyData//endsong_1.json')
 #
@@ -86,3 +87,24 @@ for i in range(len(df_dd)):
 inds_to_drop = [item for sublist in inds_to_drop for item in sublist]
 
 B = df_all.drop(inds_to_drop)
+#B.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history.csv',
+#         encoding='utf_32')
+
+C = B[['master_metadata_album_artist_name','master_metadata_album_album_name',
+       'master_metadata_track_name']]
+C = C.rename(columns={'master_metadata_album_artist_name':'Artist',
+                      'master_metadata_album_album_name':'Album',
+                      'master_metadata_track_name':'Track Title'})
+
+ms_list = B.ms_played.tolist()
+C['Duration'] = [str(timedelta(seconds=round((i/1000.)))) for i in ms_list]
+
+ts_list = B.ts.tolist()
+C['Date Scrobbled'] = [str(i).replace('T',' ').replace('Z','')[:-3] for i in ts_list]
+
+C['Album Artist'] = C.Artist
+
+C = C[['Artist','Album','Track Title','Duration','Album Artist','Date Scrobbled']]
+
+C.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history_v2.csv',
+         encoding='utf_32',index=False,header=False)
