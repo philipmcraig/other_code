@@ -97,14 +97,14 @@ C = C.rename(columns={'master_metadata_album_artist_name':'Artist',
                       'master_metadata_track_name':'Track Title'})
 
 ms_list = B.ms_played.tolist()
-C['Duration'] = [str(timedelta(seconds=round((i/1000.)))) for i in ms_list]
+C['Duration'] = [str(datetime.timedelta(seconds=round((i/1000.)))) for i in ms_list]
 
 ts_list = B.ts.tolist()
 C['Date Scrobbled'] = [str(i).replace('T',' ').replace('Z','')[:-3] for i in ts_list]
 
 C['Album Artist'] = C.Artist
 
-C = C[['Artist','Album','Track Title','Duration','Album Artist','Date Scrobbled']]
+C = C[['Artist','Album','Track Title','Date Scrobbled','Album Artist','Duration']]
 
-C.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history_v2.csv',
-         encoding='utf_32',index=False,header=False)
+C.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history_v3.csv',
+         encoding='utf_32_be',index=False,header=False)
