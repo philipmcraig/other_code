@@ -8,7 +8,7 @@ Created on Mon Feb 18 15:35:28 2019
 from __future__ import division
 import pylab as pl
 import glob
-from mpl_toolkits.basemap import Basemap
+#from mpl_toolkits.basemap import Basemap
 import pandas as pd
 import cartopy
 import cartopy.crs as ccrs
@@ -23,10 +23,11 @@ from cartopy.feature import ShapelyFeature
 pl.close('all')
 homedir = '/home/users/qx911590/'
 resdir = homedir + 'weatherrescue/'
+dwrdir = 'C:\\Users\\phili\\Documents\\GitHub\\DWR_1861-1875\\'
 
 #stations = pl.genfromtxt(homedir+'allyears.csv',delimiter=',',dtype=None)
 #names = stations[:,0]
-stations = pd.read_csv(homedir+'allyears_1861-1875.csv',header=None)
+stations = pd.read_csv(dwrdir+'allyears_1861-1875.csv',header=None)
 stations = pl.asarray(stations)
 names = stations[:,0]
 
@@ -51,7 +52,7 @@ names = stations[:,0]
 #pl.legend(handles,names,loc=0)
 #pl.tight_layout()
 
-fig = pl.figure(figsize=(12.5,10))
+fig = pl.figure(figsize=(15,12)) #12.5, 10
 ax = pl.axes(projection=ccrs.PlateCarree())
 ax.set_extent([-12,26,37,67])
 ax.coastlines(resolution='50m',linewidth=0.5,zorder=5,color='lightgrey')
@@ -81,40 +82,57 @@ for i in range(len(names)):
     ax.plot(stations[i,2],stations[i,1],lw=0,marker='o',ms=0,color=None,
         transform=ccrs.Geodetic(),zorder=0,alpha=0,label=str(i+1)+'. '+names[i])
     if i == 11:
-        pl.text(stations[i,2]-0.65,stations[i,1],str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]-0.65,stations[i,1],str(i+1),zorder=7,
+                weight='bold',size=14)
     elif i == 15:
-        pl.text(stations[i,2],stations[i,1],str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1],str(i+1),zorder=7,weight='bold',
+                size=14)
     elif i == 16:
-        pl.text(stations[i,2]-0.7,stations[i,1]-0.2,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]-0.7,stations[i,1]-0.2,str(i+1),zorder=7,
+                weight='bold',size=14)
     elif i == 23:
-        pl.text(stations[i,2]-0.7,stations[i,1]-0.2,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]-0.7,stations[i,1]-0.2,str(i+1),zorder=7,
+                weight='bold',size=14)
     elif i == 26:
-        pl.text(stations[i,2],stations[i,1]-0.4,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1]-0.4,str(i+1),zorder=7,weight='bold',
+                size=14)
     elif i == 28:
-        pl.text(stations[i,2],stations[i,1]-0.4,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1]-0.4,str(i+1),zorder=7,weight='bold',
+                size=14)
     elif i == 33:
-        pl.text(stations[i,2]-0.2,stations[i,1]+0.1,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]-0.2,stations[i,1]+0.1,str(i+1),zorder=7,
+                weight='bold',size=14)
     elif i == 34:
-        pl.text(stations[i,2]-0.7,stations[i,1]-0.5,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]-0.7,stations[i,1]-0.5,str(i+1),zorder=7,
+                weight='bold',size=14)
     elif i == 35:
-        pl.text(stations[i,2],stations[i,1]-0.3,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1]-0.3,str(i+1),zorder=7,
+                weight='bold',size=14)
     elif i == 40:
-        pl.text(stations[i,2],stations[i,1]+0.1,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1]+0.1,str(i+1),zorder=7,weight='bold',
+                size=14)
     elif i == 41:
-        pl.text(stations[i,2],stations[i,1]-0.3,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1]-0.3,str(i+1),zorder=7,weight='bold',
+                size=14)
     elif i == 49:
-        pl.text(stations[i,2]-0.75,stations[i,1],str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]-0.75,stations[i,1],str(i+1),zorder=7,weight='bold',
+                size=14)
     elif i == 54:
-        pl.text(stations[i,2]+0.1,stations[i,1]-0.5,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]+0.1,stations[i,1]-0.5,str(i+1),zorder=7,
+                weight='bold',size=14)
     elif i == 57:
-        pl.text(stations[i,2],stations[i,1]-0.4,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1]-0.4,str(i+1),zorder=7,weight='bold',
+                size=14)
     elif i == 66:
-        pl.text(stations[i,2]-0.5,stations[i,1]-0.4,str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2]-0.5,stations[i,1]-0.4,str(i+1),zorder=7,
+                weight='bold',size=14)
     else:
-        pl.text(stations[i,2],stations[i,1],str(i+1),zorder=7,weight='bold')
+        pl.text(stations[i,2],stations[i,1],str(i+1),zorder=7,weight='bold',
+                size=14)
 
 #pl.rcParams["legend.labelspacing"] = 0
-pl.legend(loc=(0.54,0.01),ncol=4,columnspacing=-0.5,handlelength=0,borderpad=0.2)
+pl.legend(loc=(0.61,0.01),ncol=3,columnspacing=-0.5,handlelength=0,borderpad=0.2,
+          fontsize=13)
 
 #ax.set_xticks([-30,-20,-10,0,10,20,26],crs=ccrs.PlateCarree())
 #lon_formatter = LongitudeFormatter(zero_direction_label=False)
@@ -131,8 +149,8 @@ gl.ylabels_left = True; gl.ylabels_right=False
 gl.xlocator = mticker.FixedLocator([-40,-30,-20,-10,0,10,20,26,30])
 gl.ylocator = mticker.FixedLocator([25,35,45,55,65,75])
 gl.xformatter = LONGITUDE_FORMATTER; gl.yformatter = LATITUDE_FORMATTER
-gl.xlabel_style = {'color': 'k','size':11}
-gl.ylabel_style = {'color': 'k','size':11}
+gl.xlabel_style = {'color': 'k','size':14}
+gl.ylabel_style = {'color': 'k','size':14}
 
 pl.tight_layout()
 pl.subplots_adjust(top=0.99,bottom=0.04,right=1.00,left=0.01)
@@ -149,7 +167,7 @@ ax2.add_feature(land_50m,alpha=0.5)
 
 ax2.plot(stations[-1,2],stations[-1,1],lw=0,marker='o',ms=3,color='r',
         transform=ccrs.Geodetic(),zorder=6)
-pl.text(stations[-1,2],stations[-1,1],'71',zorder=7,weight='bold')
+pl.text(stations[-1,2],stations[-1,1],'71',zorder=7,weight='bold',size=14)
 
 gl = ax2.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
                   linewidth=0.5, color='gray', alpha=0.5, linestyle='--')
@@ -158,8 +176,8 @@ gl.ylabels_left = False; gl.ylabels_right = True
 gl.xlocator = mticker.FixedLocator([-100,-90,-80,-70,-60,-50,-40,-30])
 gl.ylocator = mticker.FixedLocator([25,35,45,55,65,75])
 gl.xformatter = LONGITUDE_FORMATTER; gl.yformatter = LATITUDE_FORMATTER
-gl.xlabel_style = {'color': 'k','size':10}
-gl.ylabel_style = {'color': 'k','size':10}
+gl.xlabel_style = {'color': 'k','size':13}
+gl.ylabel_style = {'color': 'k','size':13}
 
 #pl.savefig(homedir+'allstations_map_paper_2022.png',dpi=400)
 #pl.savefig(homedir+'allstations_map_paper_2022.pdf',dpi=400)
