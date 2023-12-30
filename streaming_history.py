@@ -12,6 +12,11 @@ from datetime import date, timedelta
 
 json_files = glob.glob('C://Users//phili//Documents//spotify_stream_history_dec23//StreamingHistory*.json')
 
+old_files = glob.glob('C://Users//phili//Documents//spotify_stream_history_jun23//Streaming_History_Audio*')
+
+df_json = pd.read_json(old_files[0])
+old_col_names = df_json.keys()
+
 #data = pd.read_json('C://Users//phili//Downloads//my_spotify_data_all//MyData//endsong_1.json')
 #
 #mask = data['ts'] < '2019-04-03T15:39:00Z'
@@ -25,8 +30,8 @@ for i in range(len(json_files)):
     #mask = (df_json['ts'] > '2019-04-03T08:00:00Z') & (df_json['ts'] < '2019-04-04T01:00:00Z')
     df_json.endTime = pd.to_datetime(df_json['endTime'])
     #df_json.endTime = df_json['endTime'].dt.date#strftime('%Y-%m-%d %H:%M')
-    mask = (pl.datetime64(date(2022,12,1)) < df_json['endTime']) &\
-                        (pl.datetime64(date(2023,12,6)) > df_json['endTime'])
+    mask = (pl.datetime64(date(2023,6,6)) < df_json['endTime']) &\
+                        (pl.datetime64(date(2023,7,10)) > df_json['endTime'])
     df_out = df_json[mask]
     hold.append(df_out)
 
@@ -98,12 +103,20 @@ C['Date Scrobbled'] = [str(i).replace('T',' ').replace('Z','')[:-3] for i in ts_
 C['Album Artist'] = C.Artist
 
 C = C[['Date Scrobbled','Artist','Track Title','Duration']]
-C = C.rename(columns={'Date Scrobbled':'endTime',
-                      'Artist':'artistName',
-                      'Track Title':'trackName',
-                      'Duration':'msPlayed'})
+C = C.rename(columns={'Date Scrobbled':old_col_names[0],
+                      'Artist':old_col_names[8],
+                      'Track Title':old_col_names[7],
+                      'Duration':old_col_names[3]})
 
-C.to_json('C://Users//phili/Documents/spotify_stream_history_dec23/StreamingHistory5.json',
+# columns not in C DataFrame
+not_used = list(set(old_col_names) - set(C.keys()))
+
+for i in range(len(not_used)):
+    C[not_used[i]] = pl.nan
+
+C['username'] = 'the_black_wizard'
+
+C.to_json('C://Users//phili/Documents/spotify_stream_history_dec23/Streaming_History_Audio_2023_0.json',
           lines=True,orient='records',force_ascii=False)
 #C.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history_v3.csv',
  #        encoding='utf_32_be',index=False,header=False)
