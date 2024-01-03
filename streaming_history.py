@@ -116,7 +116,7 @@ for i in range(len(not_used)):
 
 C['username'] = 'the_black_wizard'
 
-C.to_json('C://Users//phili/Documents/spotify_stream_history_dec23/Streaming_History_Audio_2023_0.json',
-          lines=True,orient='records',force_ascii=False)
+#C.to_json('C://Users//phili/Documents/spotify_stream_history_dec23/Streaming_History_Audio_2023_0.json',
+ #         lines=True,orient='records',force_ascii=False)
 #C.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history_v3.csv',
  #        encoding='utf_32_be',index=False,header=False)
