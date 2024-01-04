@@ -8,6 +8,7 @@ Created on Sat Feb 11 12:47:08 2023
 import pylab as pl
 import pandas as pd
 import glob as glob
+<<<<<<< HEAD
 from datetime import date, timedelta
 
 json_files = glob.glob('C://Users//phili//Documents//spotify_stream_history_dec23//StreamingHistory*.json')
@@ -16,6 +17,10 @@ old_files = glob.glob('C://Users//phili//Documents//spotify_stream_history_jun23
 
 df_json = pd.read_json(old_files[0])
 old_col_names = df_json.keys()
+=======
+
+json_files = glob.glob('C://Users//phili//Downloads//my_spotify_data_all//MyData//endsong_*.json')
+>>>>>>> parent of 929d2cf (Update streaming_history.py)
 
 #data = pd.read_json('C://Users//phili//Downloads//my_spotify_data_all//MyData//endsong_1.json')
 #
@@ -86,6 +91,7 @@ for i in range(len(df_dd)):
 
 inds_to_drop = [item for sublist in inds_to_drop for item in sublist]
 
+<<<<<<< HEAD
 B = df_all.drop(inds_to_drop)
 #B.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history.csv',
 #         encoding='utf_32')
@@ -120,3 +126,6 @@ C['username'] = 'the_black_wizard'
  #         lines=True,orient='records',force_ascii=False)
 #C.to_csv('C://Users//phili//Documents//spotify_stream_history_jun23//spotify_all_history_v3.csv',
  #        encoding='utf_32_be',index=False,header=False)
+=======
+B = df_all.drop(inds_to_drop)
+>>>>>>> parent of 929d2cf (Update streaming_history.py)
